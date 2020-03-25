@@ -144,7 +144,6 @@
 									<span class="death-title">Total Deaths</span>
 									<div class="stat-wrapper death-extra">
 										<span id="deaths-desk" style="font-size: inherit;"></span>
-										<span class="stat-death">*</span>
 									</div>
 									<div class="container" style="text-align:left;">
 										<span id="informed-sub-title">
@@ -3592,7 +3591,7 @@
 					</div>
 					<div class="grad_card">
 						<div class="wrapper">
-							<canvas id="stateCases" width="100%" height="300px"></canvas>
+							<div id="chartdiv" style="height: 350px;"></div>
 						</div>
 					</div>
 				</div>
@@ -3600,6 +3599,7 @@
 		</div>
 		<div class="container" style="text-align: center; color: rgb(180, 180, 180);">
 			<!-- <h4>The Covid-19 (Coronavirus) pandemic by district in India.</h4> -->
+			<canvas id="stateCases" width="100%" height="300px" style="display:none"></canvas>
 		</div>
 
 
@@ -3766,6 +3766,9 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	<script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+	<script src="https://www.amcharts.com/lib/3/maps/js/indiaLow.js"></script>
+	<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
 	<script>
 		function _colornum(color) {

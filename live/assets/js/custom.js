@@ -248,6 +248,130 @@ $.when(
           }
         }
       });
+      var map = AmCharts.makeChart("chartdiv", {
+        type: "map",
+        zoomOnDoubleClick: false,
+        zoomControl: {
+          zoomControlEnabled: false,
+          panControlEnabled: false
+        },
+        theme: "dark",
+        dataProvider: {
+          map: "indiaLow",
+          areas: [
+            { id: "IN-AN", value: "3", color: "#129cf3" },
+            { id: "IN-AP", value: "3", color: "#129cf3" },
+            { id: "IN-AR", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-AS", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-BR", value: "3", color: "#129cf3" },
+            { id: "IN-CH", value: "3", color: "#129cf3" },
+            { id: "IN-CT", value: "3", color: "#129cf3" },
+            { id: "IN-DD", value: "3", color: "#129cf3" },
+            { id: "IN-DL", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-DN", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-GA", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-GJ", value: "3", color: "#129cf3" },
+            { id: "IN-HP", value: "3", color: "#129cf3" },
+            { id: "IN-HR", value: "3", color: "#129cf3" },
+            { id: "IN-JH", value: "3", color: "#129cf3" },
+            { id: "IN-JK", value: "3", color: "#129cf3" },
+            { id: "IN-KA", value: "3", color: "#129cf3" },
+            { id: "IN-KL", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-LD", value: "3", color: "#129cf3" },
+            { id: "IN-MH", value: "3", color: "#129cf3" },
+            { id: "IN-ML", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-MN", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-MP", value: "3", color: "#129cf3" },
+            { id: "IN-MZ", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-NL", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-OR", value: "3", color: "#129cf3" },
+            { id: "IN-PB", value: "3", color: "#129cf3" },
+            { id: "IN-PY", value: "3", color: "#129cf3" },
+            { id: "IN-RJ", value: "3", color: "#129cf3" },
+            { id: "IN-SK", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-TG", value: "3", color: "#129cf3" },
+            { id: "IN-TN", value: "3", color: "#129cf3" },
+            { id: "IN-TR", value: "3", color: "#129cf3", callout: true },
+            { id: "IN-UP", value: "3", color: "#129cf3" },
+            { id: "IN-UT", value: "3", color: "#129cf3" },
+            { id: "IN-WB", value: "3", color: "#129cf3", callout: true }
+          ]
+        },
+        areasSettings: {
+          autoZoom: false,
+          selectedColor: "#CC0000"
+        },
+        imagesSettings: {
+          labelColor: "#fff",
+          labelPosition: "middle"
+        }
+      });
+
+      map.addListener("init", function() {
+        setTimeout(function() {
+          // iterate through areas and put a label over center of each
+          //map.dataProvider.images = [];
+          for (x in map.dataProvider.areas) {
+            var area = map.dataProvider.areas[x];
+            area.groupId = area.id;
+            var image = new AmCharts.MapImage();
+            image.title = area.title;
+            image.linkToObject = area;
+            image.groupId = area.id;
+
+            map.dataProvider.images.push(image);
+          }
+          map.validateData();
+        }, 100);
+      });
+
+      map.addListener("init", function() {
+        var offset = 0;
+
+        setTimeout(function() {
+          // iterate through areas and put a label over center of each
+          //map.dataProvider.images = [];
+          for (x in map.dataProvider.areas) {
+            var area = map.dataProvider.areas[x];
+            area.groupId = area.id;
+            var image = new AmCharts.MapImage();
+            image.title = area.title;
+            image.linkToObject = area;
+            image.groupId = area.id;
+
+            // callout or regular label
+            if (area.callout) {
+              image.latitude = callouts.shift();
+              image.longitude = 156;
+              image.label = area.value;
+              image.type = "rectangle";
+              image.color = area.color;
+              image.shiftX = offset;
+              image.width = 22;
+              image.height = 22;
+
+              // create additional image
+              var image2 = new AmCharts.MapImage();
+              image2.latitude = image.latitude;
+              image2.longitude = image.longitude;
+              image2.label = area.id.split("-").pop();
+              image2.labelColor = "#000";
+              image2.labelShiftX = 24;
+              image2.groupId = area.id;
+              map.dataProvider.images.push(image2);
+            } else {
+              image.latitude =
+                latitude[area.id] || map.getAreaCenterLatitude(area);
+              image.longitude =
+                longitude[area.id] || map.getAreaCenterLongitude(area);
+              image.label = area.id.split("-").pop() + "\n" + area.value;
+            }
+
+            map.dataProvider.images.push(image);
+          }
+          map.validateData();
+        }, 100);
+      });
     }
   )
 );
