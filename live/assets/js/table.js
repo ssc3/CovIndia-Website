@@ -70,6 +70,8 @@ $.when(
         })
       })
 
+      sortAlphabeticallyWithCountryFirst(options)
+
       let optionList = document.getElementById('stateDropdown')
       let optionListMob = document.getElementById("stateDropdownMob")
 
@@ -81,3 +83,14 @@ $.when(
     }
   )
 );
+
+function sortAlphabeticallyWithCountryFirst(arr) {
+    for (var i=0; i < arr.length; i++) {
+        if (arr[i].text === "India") {
+            var a = arr.splice(i,1);   // removes the item
+            arr.unshift(a[0]);         // adds it back to the beginning
+            break;
+        }
+    }
+}
+
