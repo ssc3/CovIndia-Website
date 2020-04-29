@@ -70,7 +70,21 @@ $.when(
         })
       })
 
-      sortAlphabeticallyWithCountryFirst(options)
+      options.sort(function(a, b) {
+         if (a.text < b.text)
+            return -1;
+         if (a.text > b.text)
+            return 1;
+         return 0;
+      });
+
+      for (var i=0; i < options.length; i++) {
+        if (options[i].text === "India") {
+            var a = options.splice(i,1);   // removes the item
+            options.unshift(a[0]);         // adds it back to the beginning
+            break;
+        }
+      }
 
       let optionList = document.getElementById('stateDropdown')
       let optionListMob = document.getElementById("stateDropdownMob")
@@ -83,14 +97,3 @@ $.when(
     }
   )
 );
-
-function sortAlphabeticallyWithCountryFirst(arr) {
-    for (var i=0; i < arr.length; i++) {
-        if (arr[i].text === "India") {
-            var a = arr.splice(i,1);   // removes the item
-            arr.unshift(a[0]);         // adds it back to the beginning
-            break;
-        }
-    }
-}
-
